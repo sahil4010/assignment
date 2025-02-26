@@ -14,10 +14,13 @@ jobs:
             uses: hashicorp/setup-terraform@v3
         
         -   name: terraform initialize
-            run: terraform init
+            run: |
+                cd terraform  && terraform init
         
         -   name: validate
-            run: terraform validate
+            run: |
+                cd terraform && terraform validate
         
         -   name: plan
-            run: terraform plan
+            run: |
+                cd terraform && terraform plan
