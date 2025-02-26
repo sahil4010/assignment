@@ -24,3 +24,12 @@ jobs:
         -   name: plan
             run: |
                 cd terraform && terraform plan
+        
+        -   name: apply terraform
+            run: |
+                cd terraform && terraform apply
+    
+        -   name: destroy
+            run: |
+                cd terraform && terraform destroy
+                
