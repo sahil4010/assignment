@@ -1,0 +1,11 @@
+name: assignment-workflow
+on: workflow_dispatch
+jobs:
+    az-terraform:
+        runs-on: ubuntu-latest
+        steps:
+        -   name: az login
+            run: az login --tenant add67cd2-c8b2-416c-b171-b61b22be92f4
+        
+        -   name: terraform initialize
+            run: terraform init
