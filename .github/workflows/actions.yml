@@ -4,8 +4,15 @@ jobs:
     az-terraform:
         runs-on: ubuntu-latest
         steps:
+        -   name: get code
+            uses: actions/checkout@v4
+
         -   name: az login
             run: az login --tenant add67cd2-c8b2-416c-b171-b61b22be92f4
         
+        -   name: terraform setup
+            uses: hashicorp/setup-terraform@v3
+        
         -   name: terraform initialize
             run: terraform init
+        
