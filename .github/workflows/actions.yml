@@ -34,8 +34,8 @@ jobs:
                 cd terraform 
                 resource_group_name=$(terraform output rg_name)
                 cluster_name=$(terraform output aks_name) 
-                echo "resource_group_name=$resource_group_name" >> $GITHUB.ENV 
-                echo "cluster_name=$cluster_name" >> $GITHUB>ENV
+                echo "resource_group_name=$resource_group_name" >> $GITHUB_ENV 
+                echo "cluster_name=$cluster_name" >> $GITHUB_ENV
 
         -   name: accessing aks_cluster
             run: |
