@@ -33,8 +33,8 @@ jobs:
             run: |
                 resource_group_name=$(terraform output rg_name)
                 cluster_name=$(terraform output aks_name) 
-                echo "resource_group_name=$resource_group_name" >> GITHUB.ENV
-                echo "cluster_name=$cluster_name" >> GITHUB.ENV
+                echo "$resource_group_name" 
+                echo "$cluster_name"
 
         -   name: accessing aks_cluster
             run: |
