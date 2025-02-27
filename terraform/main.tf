@@ -20,6 +20,10 @@ module "rg"{
   location	= var.location
 }
 
+output "rg_name"{
+  value = module.rg.azurerm_resource_group.rg.rg_name
+}
+
 module "vnet" {
   source 	      = "./modules/vnet"
   location 	      = module.rg.rg_location
@@ -51,7 +55,4 @@ output "aks_name"{
   value = module.aks.azurerm_kubernetes_cluster.k8.name
 }
 
-output "rg_name"{
-  value = module.rg.azurerm_resource_group.rg.rg_name
-}
 
