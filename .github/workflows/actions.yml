@@ -31,5 +31,27 @@ jobs:
     
         -   name: get cluster and rg name
             run: |
-                resource_group_name=$(terraform output -raw resource_group_name)
-                cluster_name=$(terraform output - raw aks_cluster_name)
+                resource_group_name=$(terraform output -raw rg_name)
+                cluster_name=$(terraform output -raw aks_name) 
+                echo "resource_group_name=$resource_group_name" >> GITHUB.ENV
+                echo "cluster_name=$cluster_name" >> GITHUB.ENV
+
+        -   name: accessing aks_cluster
+            run: |
+                az aks get-credentials --resource-group ${{ env.resource_group_name }} --name ${{ env.cluster_name }}
+
+        -   name: creating namespace deploying app and service for sql
+            run: |
+                cd eks-manifests && kubectl create ns assignment
+                && kubectl apply -n assignment -f mysql-deployment.yml
+                && kubectl apply -n assignment -f mysql-configmap.yml
+                && kubectl apply -n assignment -f mysql-secrets.yml
+                && kubectl apply -n assignment -f mysql-service.yml
+                && kubectl get all -n assignment
+                
+        -   name: deploying app and its service
+            run: |
+                cd eks-manifests && kubectl apply -n assignment -f two-tier-app-deployment.yml
+                && kubectl apply -n assignment -f two-tier-app-svc.yml
+                && kubectl get all -n assignment
+                
