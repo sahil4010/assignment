@@ -21,7 +21,7 @@ module "rg"{
 }
 
 output "rg_name"{
-  value = module.rg.azurerm_resource_group.rg.rg_name
+  value = module.rg.rg_name
 }
 
 module "vnet" {
@@ -52,7 +52,6 @@ module "aks" {
 }
 
 output "aks_name"{
-  value = module.aks.azurerm_kubernetes_cluster.k8.name
+  value = module.aks.name
 }
-
 
