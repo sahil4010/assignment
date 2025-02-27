@@ -32,14 +32,14 @@ jobs:
         -   name: get cluster and rg name
             run: |
                 cd terraform 
-                resource_group_name=$(terraform output rg_name) >>  $GITHUB.ENV
-                cluster_name=$(terraform output aks_name) >> $GITHUB.ENV 
-                echo "$resource_group_name" 
-                echo "$cluster_name"
+                resource_group_name=$(terraform output rg_name)
+                cluster_name=$(terraform output aks_name) 
+                echo "resource_group_name=$resource_group_name" >> $GITHUB.ENV 
+                echo "cluster_name=$cluster_name" >> $GITHUB>ENV
 
         -   name: accessing aks_cluster
             run: |
-                az aks get-credentials --resource-group ${{ ENV.resource_group_name}} --name ${{ ENV.cluster_name}}
+                az aks get-credentials --resource-group $resource_group_name --name ${{ ENV.cluster_name}}
 
         -   name: creating namespace deploying app and service for sql
             run: |
