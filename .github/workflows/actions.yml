@@ -31,8 +31,8 @@ jobs:
     
         -   name: get cluster and rg name
             run: |
-                resource_group_name=$(terraform output -raw rg_name)
-                cluster_name=$(terraform output -raw aks_name) 
+                resource_group_name=$(terraform output rg_name)
+                cluster_name=$(terraform output aks_name) 
                 echo "resource_group_name=$resource_group_name" >> GITHUB.ENV
                 echo "cluster_name=$cluster_name" >> GITHUB.ENV
 
