@@ -25,11 +25,17 @@ jobs:
         -   name: build and tag image
             run: |
                 docker build -t assignment-image .
-                docker tag assignment-image ${{ secrets.docker_username }}/assignment:first
+                docker tag assignment-image ${{ secrets.docker_username }}/assignment:latest
         
         -   name: push docker image
-            run: docker push ${{ secrets.docker_username }}/assignment:first
+            run: docker push ${{ secrets.docker_username }}/assignment:latest
 
+        -   name: update docker image
+            uses: silverlyra/latest-image-action
+            with:
+              repository: ${{ secrets.docker_username }}/assignment
+              candidate-tag: ${{ github.ref_name }}
+          
 
         -   name: changing k8 manifests sql
             run:  |
