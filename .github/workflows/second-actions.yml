@@ -41,7 +41,7 @@ jobs:
 
         -   name: changing k8 manifests app
             run: |
-                
+                cd k8s
                 kubectl apply -n assignment -f two-tier-app-deployment.yml
                 kubectl apply -n assignment -f two-tier-app-svc.yml                
                 kubectl get all -n assignment
