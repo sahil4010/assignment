@@ -1,0 +1,15 @@
+name: after-workflow-1
+on: push
+jobs:
+    first:
+        runs-on: ubuntu-latest
+        steps:
+        -   name: get code
+            uses: actions/checkout@v4
+        -   name: az credentials
+            run: az login --tenant add67cd2-c8b2-416c-b171-b61b22be92f4
+        
+        -   name: docker login
+            run: |
+                echo ${{ secrets.docker_access_tocken }} | docker login -u ${{ secrets.docker_username }} --password-stdin
+
