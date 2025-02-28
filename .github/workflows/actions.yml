@@ -43,16 +43,18 @@ jobs:
 
         -   name: creating namespace deploying app and service for sql
             run: |
-                cd eks-manifests && kubectl create ns assignment
-                && kubectl apply -n assignment -f mysql-deployment.yml
-                && kubectl apply -n assignment -f mysql-configmap.yml
-                && kubectl apply -n assignment -f mysql-secrets.yml
-                && kubectl apply -n assignment -f mysql-service.yml
-                && kubectl get all -n assignment
+                cd eks-manifests 
+                kubectl create ns assignment
+                kubectl apply -n assignment -f mysql-deployment.yml
+                kubectl apply -n assignment -f mysql-configmap.yml
+                kubectl apply -n assignment -f mysql-secrets.yml
+                kubectl apply -n assignment -f mysql-service.yml
+                kubectl get all -n assignment
                 
         -   name: deploying app and its service
             run: |
-                cd eks-manifests && kubectl apply -n assignment -f two-tier-app-deployment.yml
-                && kubectl apply -n assignment -f two-tier-app-svc.yml
-                && kubectl get all -n assignment
+                cd eks-manifests 
+                kubectl apply -n assignment -f two-tier-app-deployment.yml
+                kubectl apply -n assignment -f two-tier-app-svc.yml
+                kubectl get all -n assignment
                 
