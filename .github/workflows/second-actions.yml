@@ -31,7 +31,7 @@ jobs:
             run: docker push ${{ secrets.docker_username }}/assignment:latest
 
         -   name: update docker image
-            uses: silverlyra/latest-image-action@latest
+            uses: silverlyra/latest-image-action
             with:
               repository: ${{ secrets.docker_username }}/assignment
               candidate-tag: latest
