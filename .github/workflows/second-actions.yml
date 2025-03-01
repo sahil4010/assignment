@@ -1,5 +1,5 @@
 name: after-workflow-1
-on: workflow_dispatch
+on: push
 jobs:
     first:
         runs-on: ubuntu-latest
