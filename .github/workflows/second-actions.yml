@@ -31,11 +31,14 @@ jobs:
             run: docker push ${{ secrets.docker_username }}/assignment:latest
 
         -   name: update docker image
-            uses: silverlyra/latest-image-action
+            id: check
+            uses: lucacome/docker-image-update-checker@v2.0.0
             with:
-              repository: ${{ secrets.docker_username }}/assignment
-              candidate-tag: latest
+                base-image: ${{ secrets.docker_username }}/asignment:latest
+                image: ${{ secrets.docker_username }}/asignment:latest
+
           
+
 
         -   name: changing k8 manifests sql
             run:  |
