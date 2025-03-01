@@ -57,7 +57,8 @@ jobs:
         -   name: changing image in deployment
             run: |
                 IMAGE_TAG="${GITHUB_SHA}"
-                kubectl set image deployment.apps/two-tier-app two-tier-app=${{ secrets.DOCKER_USERNAME }}/assignment:$IMAGE_TAG --record
+                export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} 
+                envsubst < k8s/two-tier-app-deployment.yml | kubectl apply -f -                                   
         -   name: changing k8 manifests app
             run: |
                 cd k8s
