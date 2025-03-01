@@ -25,14 +25,14 @@ jobs:
         -   name: build and tag image
             run: |
                 IMAGE_TAG="${GITHUB_SHA}"
-                IMAGE="${{ secrets.DOCKER_USERNAME }}/my-app:$IMAGE_TAG"
+                IMAGE="${{ secrets.DOCKER_USERNAME }}/assignment:$IMAGE_TAG"
                 docker build -t $IMAGE .
         #        docker tag assignment-image ${{ secrets.docker_username }}/assignment:IMAGE_TAG
         
         -   name: push docker image
             run: |
                 IMAGE_TAG="${GITHUB_SHA}"
-                IMAGE="${{ secrets.DOCKER_USERNAME }}/my-app:$IMAGE_TAG"
+                IMAGE="${{ secrets.DOCKER_USERNAME }}/assignment:$IMAGE_TAG"
                 docker push $IMAGE
          #   run: docker push ${{ secrets.docker_username }}/assignment:IMAGE_TAG
 
