@@ -59,7 +59,8 @@ jobs:
                 export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} 
                 export IMAGE_TAG="${GITHUB_SHA}"
                 echo "Using image: ${DOCKER_USERNAME}/assignment:${IMAGE_TAG}"
-                envsubst < k8s/two-tier-app-deployment.yml | kubectl apply -f -           
+                kubectl set image deployment/two-tier-app two-tier-app=${{ secrets.DOCKER_USERNAME }}/assignment:$IMAGE_TAG 
+              #  envsubst < k8s/two-tier-app-deployment.yml | kubectl apply -f -           
         -   name: changing k8 manifests app
             run: |
                 cd k8s
