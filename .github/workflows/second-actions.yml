@@ -37,7 +37,7 @@ jobs:
          #   run: docker push ${{ secrets.docker_username }}/assignment:IMAGE_TAG
 
         # -   name: update docker image
-        #     id: check
+       
         #     uses: lucacome/docker-image-update-checker@v2.0.0
         #     with:
         #         base-image: ${{ secrets.docker_username }}/asignment:latest
