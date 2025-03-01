@@ -54,6 +54,10 @@ jobs:
                 kubectl apply -n assignment -f mysql-secrets.yml
                 kubectl apply -n assignment -f mysql-svc.yml                
 
+        -   name: changing image in deployment
+            run: |
+                IMAGE_TAG="${GITHUB_SHA}"
+                kubectl set image deployment/two-tier-app two-tier-app=${{ secrets.DOCKER_USERNAME }}/assignment:$IMAGE_TAG --record
         -   name: changing k8 manifests app
             run: |
                 cd k8s
