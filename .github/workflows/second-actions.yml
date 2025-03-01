@@ -34,7 +34,7 @@ jobs:
             uses: silverlyra/latest-image-action
             with:
               repository: ${{ secrets.docker_username }}/assignment
-              candidate-tag: ${{ github.ref_name }}
+              candidate-tag: latest
           
 
         -   name: changing k8 manifests sql
