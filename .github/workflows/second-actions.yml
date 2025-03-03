@@ -44,10 +44,10 @@ jobs:
                         
         -   name: changing k8 manifests app
             run: |
+                Image="${{ secrets.DOCKER_USERNAME }}/assignment:latest"
                 cd k8s
+                kubectl set image deployment/two-tier-app two-tier-app=$Image
 
-
-                kubectl apply -n assignment -f two-tier-app-deployment.yml
                 kubectl apply -f two-tier-app-svc.yml -n assignment
               
                 kubectl get all -n assignment
