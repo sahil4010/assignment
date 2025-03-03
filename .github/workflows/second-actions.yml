@@ -45,7 +45,7 @@ jobs:
         -   name: changing k8 manifests app
             run: |
                 cd k8s
-                kubectl rollout restart deployment two-tier-app
+                kubectl rollout restart deployment two-tier-app -n assignment
 
                 kubectl apply -f two-tier-app-svc.yml -n assignment
               
