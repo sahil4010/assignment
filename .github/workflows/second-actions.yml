@@ -7,7 +7,7 @@ jobs:
         -   name: get code
             uses: actions/checkout@v4
         -   name: az credentials
-            run: az login --tenant add67cd2-c8b2-416c-b171-b61b22be92f4
+            run: az login --tenant ${{ secrets.tenant_id}}
 
         -   name: accessing aks_cluster
             run: |
@@ -45,7 +45,7 @@ jobs:
         -   name: changing k8 manifests app
             run: |
                 cd k8s
-                kubectl -n assignment delete deployment two-tier-app 
+
 
                 kubectl apply -n assignment -f two-tier-app-deployment.yml
                 kubectl apply -f two-tier-app-svc.yml -n assignment
