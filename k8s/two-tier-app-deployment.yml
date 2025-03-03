@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: two-tier-app
-          image: sahil4010/assignment:b9d3c517982c97b668eeb61162e673cf916fe9e2
+          image: sahil4010/assignment
           env:
             - name: MYSQL_HOST
               value: mysql          
