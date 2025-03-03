@@ -53,6 +53,11 @@ jobs:
                 kubectl apply -n assignment -f mysql-secrets.yml
                 kubectl apply -n assignment -f mysql-svc.yml                
 
+        -   name: Replace placeholders with Docker username and tag
+            run: |
+                sed "s|\${DOCKER_USERNAME}|${{ secrets.DOCKER_USERNAME }}|g" k8s/two-tier-app-deployment.yml | sed "s|\${IMAGE_TAG}|${GITHUB_SHA}|g" | kubectl apply -f -
+                  
+                
         -   name: changing image in deployment
             run: |
                 IMAGE_TAG="${GITHUB_SHA}"
