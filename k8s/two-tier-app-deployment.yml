@@ -28,4 +28,4 @@ spec:
               value: "mydb"
           ports:
             - containerPort: 5000
-          #imagePullPolicy: Always
+          imagePullPolicy: Always
