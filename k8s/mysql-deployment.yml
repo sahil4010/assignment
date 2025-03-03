@@ -31,6 +31,7 @@ spec:
               value: "admin"
           ports:
             - containerPort: 3306
+          imagePullPolicy: Always
           volumeMounts:
             - name: mysql-initdb
               mountPath: docker-entrypoint-initdb.d
