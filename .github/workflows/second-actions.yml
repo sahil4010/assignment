@@ -22,15 +22,15 @@ jobs:
         -   name: check docker login
             run: docker info
         
-        -   name: build and tag image
-            run: |
-                IMAGE="${{ secrets.DOCKER_USERNAME }}/assignment"
-                docker build -t $IMAGE .
+        # -   name: build and tag image
+        #     run: |
+        #         IMAGE="${{ secrets.DOCKER_USERNAME }}/assignment"
+        #         docker build -t $IMAGE .
         
-        -   name: push docker image
-            run: |
-                IMAGE="${{ secrets.DOCKER_USERNAME }}/assignment"
-                docker push $IMAGE
+        # -   name: push docker image
+        #     run: |
+        #         IMAGE="${{ secrets.DOCKER_USERNAME }}/assignment"
+        #         docker push $IMAGE
 
 
         -   name: changing k8 manifests sql
