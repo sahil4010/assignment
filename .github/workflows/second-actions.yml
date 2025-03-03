@@ -48,7 +48,7 @@ jobs:
             run: |
                 cd k8s
                 kubectl apply -n assignment -f two-tier-app-deployment.yml
-                kubectl delete svc two-tier-app-svc -n assignment
+                kubectl delete svc two-tier-app-service -n assignment
                 kubectl apply -f two-tier-app-svc.yml -n assignment
               
                 kubectl get all -n assignment
