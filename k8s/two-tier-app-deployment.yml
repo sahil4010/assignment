@@ -14,6 +14,7 @@ spec:
       labels:
         app: two-tier-app
     spec:
+      terminationGracePeriodSeconds: 30
       containers:
         - name: two-tier-app
           image: sahil4010/assignment
