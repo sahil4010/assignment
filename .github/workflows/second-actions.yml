@@ -47,6 +47,6 @@ jobs:
         -   name: changing k8 manifests app
             run: |
                 cd k8s
-                sed "s|\${DOCKER_USERNAME}|${{ secrets.DOCKER_USERNAME }}|g" k8s/two-tier-app-deployment.yml | sed "s|\${IMAGE_TAG}|${GITHUB_SHA}|g" | kubectl apply -f -
+                sed "s|\${DOCKER_USERNAME}|${{ secrets.DOCKER_USERNAME }}|g" two-tier-app-deployment.yml | sed "s|\${IMAGE_TAG}|${GITHUB_SHA}|g" | kubectl apply -f -
                 kubectl apply -n assignment -f two-tier-app-svc.yml                
                 kubectl get all -n assignment
