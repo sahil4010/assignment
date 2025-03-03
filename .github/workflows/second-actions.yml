@@ -27,22 +27,12 @@ jobs:
                 IMAGE_TAG="${GITHUB_SHA}"
                 IMAGE="${{ secrets.DOCKER_USERNAME }}/assignment:$IMAGE_TAG"
                 docker build -t $IMAGE .
-        #        docker tag assignment-image ${{ secrets.docker_username }}/assignment:IMAGE_TAG
         
         -   name: push docker image
             run: |
                 IMAGE_TAG="${GITHUB_SHA}"
                 IMAGE="${{ secrets.DOCKER_USERNAME }}/assignment:$IMAGE_TAG"
                 docker push $IMAGE
-         #   run: docker push ${{ secrets.docker_username }}/assignment:IMAGE_TAG
-
-        # -   name: update docker image
-       
-        #     with:
-        #         base-image: ${{ secrets.docker_username }}/asignment:latest
-        #         image: ${{ secrets.docker_username }}/asignment:latest
-
-          
 
 
         -   name: changing k8 manifests sql
@@ -53,21 +43,10 @@ jobs:
                 kubectl apply -n assignment -f mysql-secrets.yml
                 kubectl apply -n assignment -f mysql-svc.yml                
 
-        -   name: Replace placeholders with Docker username and tag
-            run: |
-                sed "s|\${DOCKER_USERNAME}|${{ secrets.DOCKER_USERNAME }}|g" k8s/two-tier-app-deployment.yml | sed "s|\${IMAGE_TAG}|${GITHUB_SHA}|g" | kubectl apply -f -
-                  
-                
-        # -   name: changing image in deployment
-        #     run: |
-        #         IMAGE_TAG="${GITHUB_SHA}"
-        #         export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} 
-        #         export IMAGE_TAG="${GITHUB_SHA}"
-        #         echo "Using image: ${DOCKER_USERNAME}/assignment:${IMAGE_TAG}"
-        #         kubectl set image deployment/two-tier-app two-tier-app=${{ secrets.DOCKER_USERNAME }}/assignment:$IMAGE_TAG 
-        #       #  envsubst < k8s/two-tier-app-deployment.yml | kubectl apply -f -           
+                        
         -   name: changing k8 manifests app
             run: |
                 cd k8s
+                sed "s|\${DOCKER_USERNAME}|${{ secrets.DOCKER_USERNAME }}|g" k8s/two-tier-app-deployment.yml | sed "s|\${IMAGE_TAG}|${GITHUB_SHA}|g" | kubectl apply -f -
                 kubectl apply -n assignment -f two-tier-app-svc.yml                
                 kubectl get all -n assignment
