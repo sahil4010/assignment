@@ -42,11 +42,11 @@ jobs:
                 kubectl apply -n assignment -f mysql-configmap.yml
                 kubectl apply -n assignment -f mysql-secrets.yml
                 kubectl apply -n assignment -f mysql-svc.yml                
-
+            #   not changing these
                         
         -   name: changing k8 manifests app
             run: |
-                cd k8s
+                cd k8s 
                 kubectl set image deployment/two-tier-app two-tier-app=${{ secrets.DOCKER_USERNAME }}/assignment:IMAGE_TAG -n assignment
 
                 kubectl apply -f two-tier-app-svc.yml -n assignment
