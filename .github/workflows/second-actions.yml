@@ -41,6 +41,11 @@ jobs:
                 kubectl get ns assignment || echo "not found" > checkns.txt
                 if grep -q "not found" checkns.txt; then
                     kubectl create ns assignment
+                    kubectl apply -n assignment -f mysql-deployment.yml
+                    kubectl apply -n assignment -f mysql-configmap.yml
+                    kubectl apply -n assignment -f mysql-secrets.yml
+                    kubectl apply -n assignment -f mysql-svc.yml
+                fi                
                 else
                     kubectl apply -n assignment -f mysql-deployment.yml
                     kubectl apply -n assignment -f mysql-configmap.yml
@@ -62,5 +67,9 @@ jobs:
                 fi 
 
                 kubectl apply -f two-tier-app-svc.yml -n assignment
+
+                helm install nginx-ingress ingress-nginx/ingress-nginx
+                kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+                kubectl apply -f two-tier-ingress.yaml -n assignment
               
                 kubectl get all -n assignment
