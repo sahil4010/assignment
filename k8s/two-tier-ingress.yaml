@@ -1,14 +1,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: minimal-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: ingress-for-app
+  namespace: assignment
+    #  annotations:
+    #    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
+  - host: 98.70.208.196.nip.io
   - http:
       paths:
-      - path: /testpath
+      - path: /
         pathType: Prefix
         backend:
           service:
