@@ -44,8 +44,7 @@ jobs:
                     kubectl apply -n assignment -f mysql-deployment.yml
                     kubectl apply -n assignment -f mysql-configmap.yml
                     kubectl apply -n assignment -f mysql-secrets.yml
-                    kubectl apply -n assignment -f mysql-svc.yml
-                fi                
+                    kubectl apply -n assignment -f mysql-svc.yml               
                 else
                     kubectl apply -n assignment -f mysql-deployment.yml
                     kubectl apply -n assignment -f mysql-configmap.yml
