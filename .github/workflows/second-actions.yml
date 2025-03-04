@@ -48,7 +48,13 @@ jobs:
             run: |
                 cd k8s 
                 IMAGE_TAG="${GITHUB_SHA}"
-                kubectl -n assignment set image deployment/two-tier-app two-tier-app=${{ secrets.DOCKER_USERNAME }}/assignment:IMAGE_TAG 
+
+                kubectl get deployment two-tier-app --namespace assignment || echo "not found" > result.txt  
+                if grep -q "not found" result.txt; then
+                    kubectl apply -f two-tier-app-deployment.yml -n assignment
+                else              
+                    kubectl -n assignment set image deployment/two-tier-app two-tier-app=${{ secrets.DOCKER_USERNAME }}/assignment:IMAGE_TAG 
+                fi 
 
                 kubectl apply -f two-tier-app-svc.yml -n assignment
               
