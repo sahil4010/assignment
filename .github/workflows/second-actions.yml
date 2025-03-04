@@ -42,7 +42,7 @@ jobs:
                 kubectl apply -n assignment -f mysql-configmap.yml
                 kubectl apply -n assignment -f mysql-secrets.yml
                 kubectl apply -n assignment -f mysql-svc.yml                
-            #   not  these
+            #   
                         
         -   name: changing k8 manifests app
             run: |
