@@ -38,7 +38,7 @@ jobs:
         -   name: changing k8 manifests sql
             run:  |
                 cd k8s
-                kubectl get ns assignment || echo ""not found" > checkns.txt
+                kubectl get ns assignment || echo "not found" > checkns.txt
                 if grep -q "not found" checkns.txt; then
                     kubectl create ns assignment
                 else
