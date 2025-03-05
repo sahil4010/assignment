@@ -1,5 +1,5 @@
 name: after-workflow-1
-on: [workflow_dispatch] 
+on: [push, workflow_dispatch] 
 jobs:
     first:
         runs-on: ubuntu-latest
@@ -66,7 +66,7 @@ jobs:
                 fi 
 
                 kubectl apply -f two-tier-app-svc.yml -n assignment
-                kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
-                kubectl apply -f two-tier-ingress.yaml 
-                kubectl get all -n assignment
+               # kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+                #kubectl apply -f two-tier-ingress.yaml 
+                #kubectl get all -n assignment
             # have to change the ip map everytime till domain is mapped
