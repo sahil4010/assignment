@@ -17,7 +17,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: two-tier-app
-          image: sahil4010/assignment:latest
+          image: sahil4010/assignment:c8c29845dd08e72c1cafe0d381e4e5c5fdbeafaa
           env:
             - name: MYSQL_HOST
               value: mysql          
