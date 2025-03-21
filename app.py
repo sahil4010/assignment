@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, jsonify#redirect, url_for
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -13,6 +13,7 @@ app.config['MYSQL_DB'] = os.environ.get('MYSQL_DB', 'default_db')
 # Initialize MySQL
 mysql = MySQL(app)
 
+
 def init_db():
     with app.app_context():
         cur = mysql.connection.cursor()
@@ -22,8 +23,9 @@ def init_db():
             message TEXT
         );
         ''')
-        mysql.connection.commit()  
+        mysql.connection.commit()
         cur.close()
+
 
 @app.route('/')
 def hello():
@@ -32,6 +34,7 @@ def hello():
     messages = cur.fetchall()
     cur.close()
     return render_template('index.html', messages=messages)
+
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -42,7 +45,7 @@ def submit():
     cur.close()
     return jsonify({'message': new_message})
 
+
 if __name__ == '__main__':
     init_db()
     app.run(host='0.0.0.0', port=5000, debug=True)
-
