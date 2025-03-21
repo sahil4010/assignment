@@ -1,72 +1,72 @@
-name: after-workflow-1
-on: [push, workflow_dispatch] 
-jobs:
-    first:
-        runs-on: ubuntu-latest
-        steps:
-        -   name: get code
-            uses: actions/checkout@v4
-        -   name: az credentials
-            run: az login --tenant ${{ secrets.tenant_id}}
+# name: after-workflow-1
+# on: [push, workflow_dispatch] 
+# jobs:
+#     first:
+#         runs-on: ubuntu-latest
+#         steps:
+#         -   name: get code
+#             uses: actions/checkout@v4
+#         -   name: az credentials
+#             run: az login --tenant ${{ secrets.tenant_id}}
 
-        -   name: accessing aks_cluster
-            run: |
-                az aks get-credentials --resource-group k8-rg --name k8-cluster
+#         -   name: accessing aks_cluster
+#             run: |
+#                 az aks get-credentials --resource-group k8-rg --name k8-cluster
         
-        -   name: Login to Docker Hub
-            uses: docker/login-action@v3
-            with:
-              username: ${{ secrets.docker_username }}
-              password: ${{ secrets.docker_password }}
+#         -   name: Login to Docker Hub
+#             uses: docker/login-action@v3
+#             with:
+#               username: ${{ secrets.docker_username }}
+#               password: ${{ secrets.docker_password }}
         
-        -   name: check docker login
-            run: docker info
+#         -   name: check docker login
+#             run: docker info
         
-        -   name: build and tag image
-            run: |
-                IMAGE_TAG="${GITHUB_SHA}"
-                IMAGE="${{ secrets.DOCKER_USERNAME }}/assignment:$IMAGE_TAG"
-                docker build -t $IMAGE .
+#         -   name: build and tag image
+#             run: |
+#                 IMAGE_TAG="${GITHUB_SHA}"
+#                 IMAGE="${{ secrets.DOCKER_USERNAME }}/assignment:$IMAGE_TAG"
+#                 docker build -t $IMAGE .
         
-        -   name: push docker image
-            run: |
-                IMAGE_TAG="${GITHUB_SHA}"
-                IMAGE="${{ secrets.DOCKER_USERNAME }}/assignment:$IMAGE_TAG"
-                docker push $IMAGE
+#         -   name: push docker image
+#             run: |
+#                 IMAGE_TAG="${GITHUB_SHA}"
+#                 IMAGE="${{ secrets.DOCKER_USERNAME }}/assignment:$IMAGE_TAG"
+#                 docker push $IMAGE
 
 
-        -   name: changing k8 manifests sql
-            run:  |
-                cd k8s
-                kubectl get ns assignment || echo "not found" > checkns.txt
-                if grep -q "not found" checkns.txt; then
-                    kubectl create ns assignment
-                    kubectl apply -n assignment -f mysql-deployment.yml
-                    kubectl apply -n assignment -f mysql-configmap.yml
-                    kubectl apply -n assignment -f mysql-secrets.yml
-                    kubectl apply -n assignment -f mysql-svc.yml               
-                else
-                    kubectl apply -n assignment -f mysql-deployment.yml
-                    kubectl apply -n assignment -f mysql-configmap.yml
-                    kubectl apply -n assignment -f mysql-secrets.yml
-                    kubectl apply -n assignment -f mysql-svc.yml
-                fi                
-            #   
+#         -   name: changing k8 manifests sql
+#             run:  |
+#                 cd k8s
+#                 kubectl get ns assignment || echo "not found" > checkns.txt
+#                 if grep -q "not found" checkns.txt; then
+#                     kubectl create ns assignment
+#                     kubectl apply -n assignment -f mysql-deployment.yml
+#                     kubectl apply -n assignment -f mysql-configmap.yml
+#                     kubectl apply -n assignment -f mysql-secrets.yml
+#                     kubectl apply -n assignment -f mysql-svc.yml               
+#                 else
+#                     kubectl apply -n assignment -f mysql-deployment.yml
+#                     kubectl apply -n assignment -f mysql-configmap.yml
+#                     kubectl apply -n assignment -f mysql-secrets.yml
+#                     kubectl apply -n assignment -f mysql-svc.yml
+#                 fi                
+#             #   
                         
-        -   name: changing k8 manifests app
-            run: |
-                cd k8s 
-                IMAGE_TAG="${GITHUB_SHA}"
+#         -   name: changing k8 manifests app
+#             run: |
+#                 cd k8s 
+#                 IMAGE_TAG="${GITHUB_SHA}"
 
-                kubectl get deployment two-tier-app --namespace assignment || echo "not found" > result.txt  
-                if grep -q "not found" result.txt; then
-                    kubectl apply -f two-tier-app-deployment.yml -n assignment
-                else              
-                    kubectl -n assignment set image deployment/two-tier-app two-tier-app=${{ secrets.DOCKER_USERNAME }}/assignment:$IMAGE_TAG 
-                fi 
+#                 kubectl get deployment two-tier-app --namespace assignment || echo "not found" > result.txt  
+#                 if grep -q "not found" result.txt; then
+#                     kubectl apply -f two-tier-app-deployment.yml -n assignment
+#                 else              
+#                     kubectl -n assignment set image deployment/two-tier-app two-tier-app=${{ secrets.DOCKER_USERNAME }}/assignment:$IMAGE_TAG 
+#                 fi 
 
-                kubectl apply -f two-tier-app-svc.yml -n assignment
-                kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
-                kubectl apply -f two-tier-ingress.yaml 
-                kubectl get all -n assignment
-            # have to change the ip map everytime till domain is mapped
+#                 kubectl apply -f two-tier-app-svc.yml -n assignment
+#                 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+#                 kubectl apply -f two-tier-ingress.yaml 
+#                 kubectl get all -n assignment
+#             # have to change the ip map everytime till domain is mapped
